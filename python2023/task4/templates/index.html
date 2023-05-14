@@ -9,7 +9,108 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1 class="text-center mt-5 mb-5">Task 4 - Luis Patiño</h1>
-    
+    <h1 class="text-center mt-5 mb-5">Task 4  - Luis Patiño</h1>
+
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="/job" method="POST">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Employer name</label>
+                            <input type="text" class="form-control mb-3" name="employer_name">
+                        </div>
+                        <div class="col">
+                            <label>Location name</label>
+                            <input type="text" class="form-control mb-3" name="location_name">
+                        </div>
+                        <div class="col">
+                            <label>Job Title</label>
+                            <input type="text" class="form-control mb-3" name="job_title">
+                        </div>
+                        <div class="col">
+                            <label>Annual base pay</label>
+                            <input type="text" class="form-control" name="annual_base_pay">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary mb-3 mt-4" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- SEARCH-->
+                <form action="/search" method="POST">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="search_query" placeholder="Search...">
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary mb-4">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- TABLE-->
+                <table class="table table-bordered">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">Employer name</th>
+                        <th scope="col">Location name</th>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Annual base pay</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </thead>
+                
+                <tbody>
+                    {% for d in data %}
+                        <tr>
+                            <td>{{d.id}}</td>
+                            <td>{{d.employer_name}}</td>
+                            <td>{{d.location_name}}</td>
+                            <td>{{d.job_title}}</td>
+                            <td>{{d.annual_base_pay}}</td>
+                            <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.id}}" data-bs-toggle="modal" data-bs-target="#modal{{d.id}}">Edit</button></td>
+                            <td><a href="{{url_for('delete', id=d.id)}}" class="btn btn-danger btn-sm">Delete</a></td>
+                        </tr>
+
+                         <!-- modal -->
+
+                         <div class="modal fade" id="modal{{d.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.employer_name}}</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/edit/{{d.id}}" method="post">
+                                        <label>Employer name</label>
+                                        <input type="text" class="form-control mb-3" name="employer_name" value="{{d.employer_name}}">
+                                        <label>Location name</label>
+                                        <input type="text" class="form-control mb-3" name="location_name" value="{{d.location_name}}">
+                                        <label>Job Title</label>
+                                        <input type="text" class="form-control mb-3" name="job_title" value="{{d.job_title}}">
+                                        <label>Annual base pay</label>
+                                        <input type="text" class="form-control mb-3" name="annual_base_pay" value="{{d.annual_base_pay}}">
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                    {% endfor %}
+
+                </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
