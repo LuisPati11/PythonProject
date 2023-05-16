@@ -39,16 +39,17 @@
                 </form>
 
                 <!-- SEARCH-->
-                <form action="/search" method="POST">
+                <form action="{{ url_for('home') }}" method="GET" class="search-form">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" name="search_query" placeholder="Search...">
+                            <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ search_keyword }}">
                         </div>
                         <div class="col">
-                            <button type="submit" class="btn btn-primary mb-4">Search</button>
+                            <button type="submit" class="btn btn-secondary mb-4">Search</button>
                         </div>
                     </div>
                 </form>
+
 
                 <!-- TABLE-->
                 <table class="table table-bordered">
